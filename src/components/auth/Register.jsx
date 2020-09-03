@@ -6,7 +6,7 @@ export class Register extends Component {
     }
     render() {
         return (
-            <div className='base-container'>
+            <div className='base-container' ref={this.props.containerRef}>
                 <div className='header'>Register</div>
                 <div className='content'>
                     <div className='image'>
