@@ -7,70 +7,46 @@ class App extends React.Component {
         super(props);
         this.state = {
             isLogginActive: true,
+            side: 'right',
         };
-    }
-
-    componentDidMount() {
-        //Add .right by default
-        this.rightSide.classList.add('right');
+        this.changeState = this.changeState.bind(this);
     }
 
     changeState() {
         const { isLogginActive } = this.state;
-
-        if (isLogginActive) {
-            this.rightSide.classList.remove('right');
-            this.rightSide.classList.add('left');
-        } else {
-            this.rightSide.classList.remove('left');
-            this.rightSide.classList.add('right');
-        }
+        const side = isLogginActive ? 'left' : 'right';
         this.setState(prevState => ({
             isLogginActive: !prevState.isLogginActive,
+            side,
         }));
     }
 
     render() {
-        const { isLogginActive } = this.state;
+        const { isLogginActive, side } = this.state;
         const current = isLogginActive ? 'Register' : 'Login';
-        const currentActive = isLogginActive ? 'login' : 'register';
         return (
             <div className='App'>
-                <div className='login'>
-                    <div
-                        className='container'
-                        ref={ref => (this.container = ref)}
-                    >
-                        {isLogginActive && (
-                            <Login containerRef={ref => (this.current = ref)} />
-                        )}
-                        {!isLogginActive && (
-                            <Register
-                                containerRef={ref => (this.current = ref)}
-                            />
-                        )}
+                <form className='login'>
+                    <div className='container'>
+                        {isLogginActive ? <Login /> : <Register />}
                     </div>
                     <RightSide
+                        side={side}
                         current={current}
-                        currentActive={currentActive}
-                        containerRef={ref => (this.rightSide = ref)}
-                        onClick={this.changeState.bind(this)}
+                        onClick={this.changeState}
                     />
-                </div>
+                </form>
             </div>
         );
     }
 }
 
 const RightSide = props => {
+    const { onClick: onClickHandler, current, side } = props;
     return (
-        <div
-            className='right-side'
-            ref={props.containerRef}
-            onClick={props.onClick}
-        >
+        <div className={`right-side ${side}`} onClick={onClickHandler}>
             <div className='inner-container'>
-                <div className='text'>{props.current}</div>
+                <div className='text'>{current}</div>
             </div>
         </div>
     );

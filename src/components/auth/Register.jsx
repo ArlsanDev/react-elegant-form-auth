@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import loginImg from '../../login.svg';
 export class Register extends Component {
-    constructor(props) {
-        super(props);
-    }
+
     render() {
         return (
-            <div className='base-container' ref={this.props.containerRef}>
+            <div className='base-container'>
                 <div className='header'>Register</div>
                 <div className='content'>
                     <div className='image'>
